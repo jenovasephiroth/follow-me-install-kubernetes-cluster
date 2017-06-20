@@ -156,11 +156,18 @@ $ kubectl config set-context default \
   --kubeconfig=bootstrap.kubeconfig
 $ # 设置默认上下文
 $ kubectl config use-context default --kubeconfig=bootstrap.kubeconfig
-$ mv bootstrap.kubeconfig /etc/kubernetes/
 ```
 
 + `--embed-certs` 为 `true` 时表示将 `certificate-authority` 证书写入到生成的 `bootstrap.kubeconfig` 文件中；
 + 设置 kubelet 客户端认证参数时**没有**指定秘钥和证书，后续由 `kube-apiserver` 自动生成；
+
+## 分发 kubelet bootstrapping kubeconfig 文件
+
+将 bootstrap.kubeconfig 文件拷贝到所有 Node 机器的 /etc/kubernetes/ 目录：
+
+```
+$ mv bootstrap.kubeconfig /etc/kubernetes/
+```
 
 ### 创建 kubelet 的 systemd unit 文件
 
@@ -331,6 +338,15 @@ $ mv kube-proxy.kubeconfig /etc/kubernetes/
 
 + 设置集群参数和客户端认证参数时 `--embed-certs` 都为 `true`，这会将 `certificate-authority`、`client-certificate` 和 `client-key` 指向的证书文件内容写入到生成的 `kube-proxy.kubeconfig` 文件中；
 + `kube-proxy.pem` 证书中 CN 为 `system:kube-proxy`，`kube-apiserver` 预定义的 RoleBinding `cluster-admin` 将User `system:kube-proxy` 与 Role `system:node-proxier` 绑定，该 Role 授予了调用 `kube-apiserver` Proxy 相关 API 的权限；
+
+### 分发 kube-proxy 客户端证书、私钥和kube-proxy kubeconfig 文件
+
+将 kube-proxy*.pem kube-proxy.kubeconfig 文件拷贝到所有 Node 机器的对应目录：
+
+```
+mv kube-proxy*.pem /etc/kubernetes/ssl/
+mv kube-proxy.kubeconfig /etc/kubernetes/
+```
 
 ### 创建 kube-proxy 的 systemd unit 文件
 
