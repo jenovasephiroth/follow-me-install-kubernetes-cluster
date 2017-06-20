@@ -140,11 +140,15 @@ $ # 导入的 environment.sh 文件定义了 BOOTSTRAP_TOKEN 变量
 $ cat > token.csv <<EOF
 ${BOOTSTRAP_TOKEN},kubelet-bootstrap,10001,"system:kubelet-bootstrap"
 EOF
+```
+### 分发 token 文件
 
-### 分发 token.csv 文件
 将 token.csv 文件拷贝到所有机器（Master 和 Node）的 /etc/kubernetes/ 目录：
+
+```
 $ sudo cp token.csv /etc/kubernetes/
 $
+```
 
 ### 创建 kube-apiserver 的 systemd unit 文件
 
