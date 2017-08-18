@@ -111,3 +111,4 @@ $ kubectl config use-context kubernetes
 ## 分发 kubeconfig 文件
 
 将 `~/.kube/config` 文件拷贝到运行 `kubelet` 命令的机器的 `~/.kube/` 目录下。
++ 要求将此证书分发到集群全部主机上
