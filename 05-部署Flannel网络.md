@@ -16,6 +16,7 @@ $ # 导入用到的其它全局变量：ETCD_ENDPOINTS、FLANNEL_ETCD_PREFIX、C
 $ source /root/local/bin/environment.sh
 $
 ```
++ 要求将此证书分发到集群全部主机上
 
 ## 创建 TLS 秘钥和证书
 
